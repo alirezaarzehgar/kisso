@@ -1,6 +1,12 @@
 #!/usr/bin/env sh
 
-KERNEL_DEB_URL=${KERNEL_DEB_URL:-"https://deb.debian.org/debian/pool/main/l/linux-signed-amd64/linux-image-6.1.0-47-amd64_6.1.170-3_amd64.deb"}
+kernel_version=$(curl https://deb.debian.org/debian/pool/main/l/linux-signed-amd64/ | \
+                    grep -o 'linux-image.*-amd64.*\amd64.deb\"' | \
+                    grep -v dbg | \
+                    tr -d '"' | \
+                    sed -n "1p")
+
+KERNEL_DEB_URL=${KERNEL_DEB_URL:-"https://deb.debian.org/debian/pool/main/l/linux-signed-amd64/$kernel_version"}
 
 # install_kernel_modules <dest_dir> [bin_cache_dir]
 #

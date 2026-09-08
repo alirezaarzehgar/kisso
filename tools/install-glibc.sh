@@ -1,6 +1,11 @@
 #!/usr/bin/env sh
 
-GLIBC_DEB_URL=${GLIBC_DEB_URL:-"https://ftp.debian.org/debian/pool/main/g/glibc/libc6_2.41-12+deb13u3_amd64.deb"}
+glibc_version=$(curl https://ftp.debian.org/debian/pool/main/g/glibc/ | \
+               grep -o 'libc.*amd64\.deb\"' | \
+               tr -d '"' | \
+               sed -n "1p")
+
+GLIBC_DEB_URL=${GLIBC_DEB_URL:-"https://ftp.debian.org/debian/pool/main/g/glibc/$glibc_version"}
 
 # install_glibc [dest_dir] [bin_cache_dir]
 #

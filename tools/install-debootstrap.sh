@@ -1,6 +1,11 @@
 #!/usr/bin/env sh
 
-CDEBOOTSTRAP_STATIC_DEB_URL=${CDEBOOTSTRAP_STATIC_DEB_URL:-"https://ftp.debian.org/debian/pool/main/c/cdebootstrap/cdebootstrap-static_0.7.8+b38_amd64.deb"}
+cdebootstrap_version=$(curl http://ftp.us.debian.org/debian/pool/main/c/cdebootstrap/ | \
+                        grep -oE "cdeb.*amd64\.deb\"" | \
+                        tr -d '"' | \
+                        sed -n "1p")
+
+CDEBOOTSTRAP_STATIC_DEB_URL=${CDEBOOTSTRAP_STATIC_DEB_URL:-"https://ftp.debian.org/debian/pool/main/c/cdebootstrap/$cdebootstrap_version"}
 
 # install_debootstrap [dest_dir] [bin_cache_dir]
 #

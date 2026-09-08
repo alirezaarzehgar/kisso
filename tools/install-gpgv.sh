@@ -1,6 +1,11 @@
 #!/usr/bin/env sh
 
-GPGV_DEB_URL=${GPGV_DEB_URL:-"https://ftp.debian.org/debian/pool/main/g/gnupg2/gpgv-static_2.4.7-21+deb13u1+b4_amd64.deb"}
+gpgv_version=$(curl https://ftp.debian.org/debian/pool/main/g/gnupg2/ | \
+               grep -o 'gpgv-static.*_amd64\.deb\"' | \
+               tr -d '"' | \
+               sed -n "1p")
+
+GPGV_DEB_URL=${GPGV_DEB_URL:-"https://ftp.debian.org/debian/pool/main/g/gnupg2/$gpgv_version"}
 
 # install_gpgv [dest_dir] [bin_cache_dir]
 #
